@@ -106,17 +106,18 @@ class JamendoClient:
 
 
 class JamendoPlaybackProvider(backend.PlaybackProvider):
-    pass
-    # def translate_uri(self, uri: str) -> Optional[str]:
-    #     track = self.backend.remote.get_track(uri, True)
-    #     if track is None:
-    #         return None
-    #     return track.uri
+    def translate_uri(self, uri: str) -> Optional[str]:
+        if "jamendo:track:" in uri:
+            uri = uri[len("jamendo:track:") :]
+            track = self.backend.remote.get_track(uri)
+            if track is None:
+                return None
+            return track.uri
+        return None
 
 
 class JamendoLibraryProvider(backend.LibraryProvider):
     def lookup(self, uri: str) -> List[Optional[Track]]:
-        logging.debug(f"looking up {uri}")
         if "jamendo:track:" in uri:
             uri = uri[len("jamendo:track:") :]
             return [self.backend.remote.get_track(uri)]
@@ -134,4 +135,4 @@ class JamendoBackend(pykka.ThreadingActor, backend.Backend):
         self.library = JamendoLibraryProvider(backend=self)
         self.playback = JamendoPlaybackProvider(audio=audio, backend=self)
 
-        self.uri_schemes = ["jamendo", "a"]
+        self.uri_schemes = ["jamendo"]
