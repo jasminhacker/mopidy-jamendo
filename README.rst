@@ -14,7 +14,7 @@ Mopidy-Jamendo
     :target: https://codecov.io/gh/jonathanhacker/mopidy-jamendo
     :alt: Test coverage
 
-Mopidy extension for Jamendo
+Mopidy extension for Jamendo. Created with the `cookiecutter template <https://github.com/mopidy/cookiecutter-mopidy-ext>`_ for Mopidy extensions and uses the same structure as `Mopidy-Soundcloud <https://github.com/mopidy/mopidy-soundcloud/>`_. Only supports playback of single tracks with uris in the form ``jamendo:track:<trackid>``.
 
 
 Installation
